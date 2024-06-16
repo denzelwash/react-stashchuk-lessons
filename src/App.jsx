@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { Form } from "./components/Form";
+import { Filter } from "./components/Filter";
+import { Header } from "./components/Header";
+import { List } from "./components/List";
 
 function App() {
   return (
     <>
-      <header className="bg-gray-200 py-6">
-        <div className="container mx-auto px-4">
-          <p className="">header</p>
+      <Header className="mb-8" />
+      <div className="container mx-auto">
+        <div className="grid grid-cols-[1fr_2fr] gap-6 items-start">
+          <Form />
+          <div className="grid gap-6 items-start">
+            <Filter />
+            <List />
+          </div>
         </div>
-      </header>
+      </div>
     </>
   );
 }
