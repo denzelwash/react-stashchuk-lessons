@@ -1,10 +1,14 @@
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { add } from "../redux/store.js";
 
 export const Form = () => {
   const [form, setForm] = useState({ title: "", author: "" });
+  const dispatch = useDispatch();
 
   const submitHandler = (e) => {
     e.preventDefault();
+    dispatch(add(form));
   };
 
   return (
