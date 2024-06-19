@@ -1,8 +1,13 @@
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteBook } from "../redux/store";
 
 export const List = () => {
   const books = useSelector((state) => state.books);
+  const dispatch = useDispatch();
 
+  const deleteHandler = (id) => {
+    dispatch(deleteBook(id));
+  };
   return (
     <>
       <div className="shadow-md p-6 rounded">
@@ -13,7 +18,21 @@ export const List = () => {
           </div>
         )}
         {books.map((book) => (
-          <h1 key={book.title}>{book.title}</h1>
+          <div
+            key={book.title}
+            className="flex justify-between items-center shadow p-4 mb-4"
+          >
+            <div>
+              <h1 className="font-medium mb-2">{book.title}</h1>
+              <p>{book.author}</p>
+            </div>
+            <button
+              onClick={() => deleteHandler(book.id)}
+              className="border p-2"
+            >
+              Delete
+            </button>
+          </div>
         ))}
       </div>
     </>

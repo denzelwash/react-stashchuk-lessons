@@ -1,19 +1,26 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { add } from "../redux/store.js";
+import { addBook } from "../redux/store.js";
+import books from "../data/books.json";
 
 export const Form = () => {
   const [form, setForm] = useState({ title: "", author: "" });
   const dispatch = useDispatch();
 
-  const submitHandler = (e) => {
+  const addBookHandler = (e) => {
     e.preventDefault();
-    dispatch(add(form));
+    dispatch(addBook(form));
+  };
+
+  const addRandomBookHandler = (e) => {
+    e.preventDefault();
+    const randomNum = Math.floor(Math.random() * books.length);
+    dispatch(addBook(books[randomNum]));
   };
 
   return (
     <>
-      <form className="shadow-md p-6 rounded" onSubmit={submitHandler}>
+      <form className="shadow-md p-6 rounded">
         <h2 className="text-xl font-semibold mb-4 pb-1 border-b">
           Add a new book
         </h2>
@@ -38,10 +45,16 @@ export const Form = () => {
           />
         </div>
         <div className="flex justify-center gap-4 flex-wrap mt-6">
-          <button className="px-4 py-2 border border-blue-300 bg-blue-300 grow">
+          <button
+            onClick={addBookHandler}
+            className="px-4 py-2 border border-blue-300 bg-blue-300 grow"
+          >
             Add book
           </button>
-          <button className="px-4 py-2 border border-blue-300 bg-blue-300 grow">
+          <button
+            onClick={addRandomBookHandler}
+            className="px-4 py-2 border border-blue-300 bg-blue-300 grow"
+          >
             Add random book
           </button>
           <button className="px-4 py-2 border border-blue-300 bg-blue-300 grow">
