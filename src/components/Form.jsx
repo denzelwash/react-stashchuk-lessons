@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBook } from "../redux/store.js";
+import { addBook } from "../redux/slices/booksSlice.js";
 import books from "../data/books.json";
 
 export const Form = () => {

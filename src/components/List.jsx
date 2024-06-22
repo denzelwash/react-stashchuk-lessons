@@ -1,12 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { deleteBook } from "../redux/store";
+import { deleteBook, toggleFavorites } from "../redux/slices/booksSlice.js";
+import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
 
 export const List = () => {
-  const books = useSelector((state) => state.books);
+  const books = useSelector((state) => state.books.value);
   const dispatch = useDispatch();
 
   const deleteHandler = (id) => {
     dispatch(deleteBook(id));
+  };
+
+  const toggleHandler = (id) => {
+    dispatch(toggleFavorites(id));
   };
   return (
     <>
@@ -19,13 +24,16 @@ export const List = () => {
         )}
         {books.map((book) => (
           <div
-            key={book.title}
+            key={book.id}
             className="flex justify-between items-center shadow p-4 mb-4"
           >
             <div>
               <h1 className="font-medium mb-2">{book.title}</h1>
               <p>{book.author}</p>
             </div>
+            <button onClick={() => toggleHandler(book.id)}>
+              {book.isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
+            </button>
             <button
               onClick={() => deleteHandler(book.id)}
               className="border p-2"
