@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { deleteBook, toggleFavorites } from "../redux/slices/booksSlice.js";
-import { MdFavoriteBorder, MdFavorite } from "react-icons/md";
+import { MdFavoriteBorder, MdFavorite, MdDeleteOutline } from "react-icons/md";
 
 export const List = () => {
   const books = useSelector((state) => state.books.value);
@@ -31,14 +31,14 @@ export const List = () => {
               <h1 className="font-medium mb-2">{book.title}</h1>
               <p>{book.author}</p>
             </div>
-            <button onClick={() => toggleHandler(book.id)}>
+            <button
+              className="ml-auto mr-6"
+              onClick={() => toggleHandler(book.id)}
+            >
               {book.isFavorite ? <MdFavorite /> : <MdFavoriteBorder />}
             </button>
-            <button
-              onClick={() => deleteHandler(book.id)}
-              className="border p-2"
-            >
-              Delete
+            <button onClick={() => deleteHandler(book.id)}>
+              <MdDeleteOutline />
             </button>
           </div>
         ))}
