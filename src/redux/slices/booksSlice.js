@@ -3,9 +3,7 @@ import { v4 as uuidv4 } from "uuid";
 
 const booksSlice = createSlice({
   name: "books",
-  initialState: {
-    value: [],
-  },
+  initialState: [],
   reducers: {
     addBook: (state, { payload }) => {
       const book = {
@@ -13,13 +11,13 @@ const booksSlice = createSlice({
         id: uuidv4(),
         isFavorite: false,
       };
-      state.value = [...state.value, book];
+      state.push(book);
     },
     deleteBook: (state, { payload }) => {
-      state.value = state.value.filter((b) => b.id !== payload);
+      return state.filter((b) => b.id !== payload);
     },
     toggleFavorites: (state, { payload }) => {
-      state.value = state.value.map((b) =>
+      return state.map((b) =>
         b.id === payload
           ? {
               ...b,

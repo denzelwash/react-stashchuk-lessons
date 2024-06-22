@@ -1,20 +1,24 @@
 import { createSlice } from "@reduxjs/toolkit";
-// import { v4 as uuidv4 } from "uuid";
 
 const filterSlice = createSlice({
   name: "filter",
   initialState: {
     title: "",
     author: "",
-    favorite: "",
+    favorite: false,
   },
   reducers: {
     changeFields: (state, { payload }) => {
       return payload;
     },
+    resetFields: () => ({
+      title: "",
+      author: "",
+      favorite: false,
+    }),
   },
 });
 
-export const { changeFields } = filterSlice.actions;
+export const { changeFields, resetFields } = filterSlice.actions;
 
 export default filterSlice.reducer;

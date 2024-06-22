@@ -9,6 +9,8 @@ const store = configureStore({
   },
 });
 
-store.subscribe(() => console.log(store.getState().filter));
+store.subscribe(() =>
+  console.log("STORE CURRENT", store.getState().books, store.getState().filter)
+);
 
 export default store;

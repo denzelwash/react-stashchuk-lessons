@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeFields } from "../redux/slices/filterSlice";
+import { changeFields, resetFields } from "../redux/slices/filterSlice";
 
 export const Filter = () => {
   const dispatch = useDispatch();
@@ -8,7 +8,7 @@ export const Filter = () => {
 
   const resetHandler = (e) => {
     e.preventDefault();
-    dispatch(changeFields({ title: "", author: "", favorite: false }));
+    dispatch(resetFields());
   };
 
   const changeFilter = (value, field) => {
