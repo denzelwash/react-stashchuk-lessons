@@ -5,7 +5,7 @@ const filterSlice = createSlice({
   initialState: {
     title: "",
     author: "",
-    favorite: false,
+    onlyFavorite: false,
   },
   reducers: {
     changeFilter: (state, { payload }) => {
@@ -14,7 +14,7 @@ const filterSlice = createSlice({
     resetFields: () => ({
       title: "",
       author: "",
-      favorite: false,
+      onlyFavorite: false,
     }),
   },
 });

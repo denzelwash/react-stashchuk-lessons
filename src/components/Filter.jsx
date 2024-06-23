@@ -39,9 +39,9 @@ export const Filter = () => {
               id="favorite"
               className="block shadow px-4 py-2 grow"
               type="checkbox"
-              checked={filter.favorite}
+              checked={filter.onlyFavorite}
               onChange={(e) =>
-                changeFilterHandler(e.target.checked, "favorite")
+                changeFilterHandler(e.target.checked, "onlyFavorite")
               }
             />
           </div>

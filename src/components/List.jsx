@@ -9,9 +9,8 @@ export const List = () => {
 
   const booksFiltered = books
     .filter((b) => b.title.toLowerCase().includes(filter.title.toLowerCase()))
-    .filter((a) =>
-      a.author.toLowerCase().includes(filter.author.toLowerCase())
-    );
+    .filter((a) => a.author.toLowerCase().includes(filter.author.toLowerCase()))
+    .filter((c) => (filter.onlyFavorite ? c.isFavorite : true));
 
   const deleteHandler = (id) => {
     dispatch(deleteBook(id));
