@@ -7,9 +7,11 @@ export const List = () => {
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 
-  const booksFiltered = books.filter((b) =>
-    b.title.toLowerCase().includes(filter.title.toLowerCase())
-  );
+  const booksFiltered = books
+    .filter((b) => b.title.toLowerCase().includes(filter.title.toLowerCase()))
+    .filter((a) =>
+      a.author.toLowerCase().includes(filter.author.toLowerCase())
+    );
 
   const deleteHandler = (id) => {
     dispatch(deleteBook(id));

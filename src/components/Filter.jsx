@@ -1,18 +1,17 @@
 import { useDispatch, useSelector } from "react-redux";
-import { changeFields, resetFields } from "../redux/slices/filterSlice";
+import { changeFilter, resetFields } from "../redux/slices/filterSlice";
 
 export const Filter = () => {
   const dispatch = useDispatch();
 
   const filter = useSelector((state) => state.filter);
-
   const resetHandler = (e) => {
     e.preventDefault();
     dispatch(resetFields());
   };
 
-  const changeFilter = (value, field) => {
-    dispatch(changeFields({ ...filter, [field]: value }));
+  const changeFilterHandler = (value, field) => {
+    dispatch(changeFilter({ ...filter, [field]: value }));
   };
 
   return (
@@ -25,14 +24,14 @@ export const Filter = () => {
             className="block shadow px-4 py-2 grow"
             type="text"
             value={filter.title}
-            onChange={(e) => changeFilter(e.target.value, "title")}
+            onChange={(e) => changeFilterHandler(e.target.value, "title")}
           />
           <input
             placeholder="Fields by author"
             className="block shadow px-4 py-2 grow"
             type="text"
             value={filter.author}
-            onChange={(e) => changeFilter(e.target.value, "author")}
+            onChange={(e) => changeFilterHandler(e.target.value, "author")}
           />
           <div className="flex items-center flex-row-reverse gap-2">
             <label htmlFor="favorite">Only favorites</label>
@@ -41,7 +40,9 @@ export const Filter = () => {
               className="block shadow px-4 py-2 grow"
               type="checkbox"
               checked={filter.favorite}
-              onChange={(e) => changeFilter(e.target.checked, "favorite")}
+              onChange={(e) =>
+                changeFilterHandler(e.target.checked, "favorite")
+              }
             />
           </div>
           <button

@@ -8,7 +8,7 @@ const filterSlice = createSlice({
     favorite: false,
   },
   reducers: {
-    changeFields: (state, { payload }) => {
+    changeFilter: (state, { payload }) => {
       return payload;
     },
     resetFields: () => ({
@@ -19,6 +19,6 @@ const filterSlice = createSlice({
   },
 });
 
-export const { changeFields, resetFields } = filterSlice.actions;
+export const { changeFilter, resetFields } = filterSlice.actions;
 
 export default filterSlice.reducer;
