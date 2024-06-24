@@ -20,6 +20,24 @@ export const List = () => {
     dispatch(toggleFavorites(id));
   };
 
+  const highLight = (string, search) => {
+    if (search === "") return string;
+    const parts = string.split(new RegExp(`(${search})`, "gi"));
+    return (
+      <span>
+        {parts.map((part, i) =>
+          part.toLowerCase() === search.toLowerCase() ? (
+            <span style={{ background: "yellow" }} key={i}>
+              {part}
+            </span>
+          ) : (
+            part
+          )
+        )}
+      </span>
+    );
+  };
+
   return (
     <>
       <div className="shadow-md p-6 rounded">
@@ -35,8 +53,10 @@ export const List = () => {
             className="flex justify-between items-center shadow p-4 mb-4"
           >
             <div>
-              <h1 className="font-medium mb-2">{book.title}</h1>
-              <p>{book.author}</p>
+              <h1 className="font-medium mb-2">
+                {highLight(book.title, filter.title)}
+              </h1>
+              <p>{highLight(book.author, filter.author)}</p>
             </div>
             <button
               className="ml-auto mr-6"
