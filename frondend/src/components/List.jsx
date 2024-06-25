@@ -57,6 +57,15 @@ export const List = () => {
                 {highLight(book.title, filter.title)}
               </h1>
               <p>{highLight(book.author, filter.author)}</p>
+              <span className="text-xs">
+                {book.type === "custom"
+                  ? "Из формы"
+                  : book.type === "random"
+                  ? "Рандомная"
+                  : book.type === "randomApi"
+                  ? "Из api"
+                  : ""}
+              </span>
             </div>
             <button
               className="ml-auto mr-6"

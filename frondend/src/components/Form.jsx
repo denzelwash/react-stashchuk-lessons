@@ -9,13 +9,13 @@ export const Form = () => {
 
   const addBookHandler = (e) => {
     e.preventDefault();
-    dispatch(addBook(form));
+    dispatch(addBook({ ...form, type: "custom" }));
   };
 
   const addRandomBookHandler = (e) => {
     e.preventDefault();
     const randomNum = Math.floor(Math.random() * books.length);
-    dispatch(addBook(books[randomNum]));
+    dispatch(addBook({ ...books[randomNum], type: "random" }));
   };
 
   const addRandomBookFromApiHandler = async (e) => {
@@ -23,7 +23,7 @@ export const Form = () => {
     try {
       const data = await fetch("http://localhost:4000/random-book");
       const json = await data.json();
-      dispatch(addBook(json));
+      dispatch(addBook({ ...json, type: "randomApi" }));
     } catch (e) {
       console.log(e);
     }
