@@ -18,6 +18,17 @@ export const Form = () => {
     dispatch(addBook(books[randomNum]));
   };
 
+  const addRandomBookFromApiHandler = async (e) => {
+    e.preventDefault();
+    try {
+      const data = await fetch("http://localhost:4000/random-book");
+      const json = await data.json();
+      dispatch(addBook(json));
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
     <>
       <form className="shadow-md p-6 rounded">
@@ -57,7 +68,10 @@ export const Form = () => {
           >
             Add random book
           </button>
-          <button className="px-4 py-2 border border-blue-300 bg-blue-300 grow">
+          <button
+            onClick={addRandomBookFromApiHandler}
+            className="px-4 py-2 border border-blue-300 bg-blue-300 grow"
+          >
             Add random book via api
           </button>
         </div>
