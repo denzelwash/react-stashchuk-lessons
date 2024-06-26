@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { addBook } from "../redux/slices/booksSlice.js";
+import { addBook, fetchRandomBook } from "../redux/slices/booksSlice.js";
 import books from "../data/books.json";
 
 export const Form = () => {
@@ -20,13 +20,7 @@ export const Form = () => {
 
   const addRandomBookFromApiHandler = async (e) => {
     e.preventDefault();
-    try {
-      const data = await fetch("http://localhost:4000/random-book");
-      const json = await data.json();
-      dispatch(addBook({ ...json, type: "randomApi" }));
-    } catch (e) {
-      console.log(e);
-    }
+    dispatch(fetchRandomBook());
   };
 
   return (

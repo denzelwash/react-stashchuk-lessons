@@ -1,4 +1,4 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 
 const booksSlice = createSlice({
@@ -6,12 +6,7 @@ const booksSlice = createSlice({
   initialState: [],
   reducers: {
     addBook: (state, { payload }) => {
-      const book = {
-        ...payload,
-        id: uuidv4(),
-        isFavorite: false,
-      };
-      state.push(book);
+      state.push(createBook(payload));
     },
     deleteBook: (state, { payload }) => {
       return state.filter((b) => b.id !== payload);
@@ -27,7 +22,33 @@ const booksSlice = createSlice({
       );
     },
   },
+  extraReducers: (builder) => {
+    builder.addCase(fetchRandomBook.fulfilled, (state, { payload }) => {
+      state.push(createBook({ ...payload, type: "randomApi" }));
+    });
+  },
 });
+
+export const fetchRandomBook = createAsyncThunk(
+  "books/fetchRandomBook",
+  async () => {
+    try {
+      const data = await fetch("http://localhost:4000/random-book");
+      const json = await data.json();
+      return json;
+    } catch (e) {
+      console.log(e);
+    }
+  }
+);
+
+function createBook(fields) {
+  return {
+    ...fields,
+    id: uuidv4(),
+    isFavorite: false,
+  };
+}
 
 export const { addBook, deleteBook, toggleFavorites } = booksSlice.actions;
 
