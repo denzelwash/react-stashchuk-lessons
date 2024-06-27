@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { addBook, fetchRandomBook } from "../redux/slices/booksSlice.js";
 import books from "../data/books.json";
+import { addError } from "../redux/slices/errorSlice.js";
 
 export const Form = () => {
   const [form, setForm] = useState({ title: "", author: "" });
@@ -9,6 +10,10 @@ export const Form = () => {
 
   const addBookHandler = (e) => {
     e.preventDefault();
+    if (!form.title || !form.author) {
+      dispatch(addError("Заполните поля"));
+      return;
+    }
     dispatch(addBook({ ...form, type: "custom" }));
   };
 
