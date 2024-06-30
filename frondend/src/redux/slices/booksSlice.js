@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
+import { addError } from "./errorSlice";
 
 const booksSlice = createSlice({
   name: "books",
@@ -31,13 +32,14 @@ const booksSlice = createSlice({
 
 export const fetchRandomBook = createAsyncThunk(
   "books/fetchRandomBook",
-  async () => {
+  async (url, thunkApi) => {
     try {
       const data = await fetch("http://localhost:4000/random-book");
       const json = await data.json();
       return json;
     } catch (e) {
-      console.log(e);
+      thunkApi.dispatch(addError(e.message));
+      throw e;
     }
   }
 );
