@@ -3,7 +3,7 @@ import { deleteBook, toggleFavorites } from "../redux/slices/booksSlice.js";
 import { MdFavoriteBorder, MdFavorite, MdDeleteOutline } from "react-icons/md";
 
 export const List = () => {
-  const books = useSelector((state) => state.books);
+  const books = useSelector((state) => state.books.books);
   const filter = useSelector((state) => state.filter);
   const dispatch = useDispatch();
 

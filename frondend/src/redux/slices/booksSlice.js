@@ -4,28 +4,41 @@ import { addError } from "./errorSlice";
 
 const booksSlice = createSlice({
   name: "books",
-  initialState: [],
+  initialState: {
+    books: [],
+    isLoadingViaApi: false,
+  },
   reducers: {
     addBook: (state, { payload }) => {
-      state.push(createBook(payload));
+      state.books.push(createBook(payload));
     },
     deleteBook: (state, { payload }) => {
-      return state.filter((b) => b.id !== payload);
+      return { ...state, books: state.books.filter((b) => b.id !== payload) };
     },
     toggleFavorites: (state, { payload }) => {
-      return state.map((b) =>
-        b.id === payload
-          ? {
-              ...b,
-              isFavorite: !b.isFavorite,
-            }
-          : b
-      );
+      return {
+        ...state,
+        books: state.books.map((b) =>
+          b.id === payload
+            ? {
+                ...b,
+                isFavorite: !b.isFavorite,
+              }
+            : b
+        ),
+      };
     },
   },
   extraReducers: (builder) => {
+    builder.addCase(fetchRandomBook.pending, (state) => {
+      state.isLoadingViaApi = true;
+    });
     builder.addCase(fetchRandomBook.fulfilled, (state, { payload }) => {
-      state.push(createBook({ ...payload, type: "randomApi" }));
+      state.isLoadingViaApi = false;
+      state.books.push(createBook({ ...payload, type: "randomApi" }));
+    });
+    builder.addCase(fetchRandomBook.rejected, (state) => {
+      state.isLoadingViaApi = false;
     });
   },
 });
@@ -34,7 +47,7 @@ export const fetchRandomBook = createAsyncThunk(
   "books/fetchRandomBook",
   async (url, thunkApi) => {
     try {
-      const data = await fetch("http://localhost:4000/random-book");
+      const data = await fetch("http://localhost:4000/random-book-delayed");
       const json = await data.json();
       return json;
     } catch (e) {

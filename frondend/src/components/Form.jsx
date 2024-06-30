@@ -1,12 +1,14 @@
 import { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addBook, fetchRandomBook } from "../redux/slices/booksSlice.js";
 import books from "../data/books.json";
 import { addError } from "../redux/slices/errorSlice.js";
+import { FaSpinner } from "react-icons/fa";
 
 export const Form = () => {
   const [form, setForm] = useState({ title: "", author: "" });
   const dispatch = useDispatch();
+  const isLoadingViaApi = useSelector((state) => state.books.isLoadingViaApi);
 
   const addBookHandler = (e) => {
     e.preventDefault();
@@ -69,9 +71,17 @@ export const Form = () => {
           </button>
           <button
             onClick={addRandomBookFromApiHandler}
-            className="px-4 py-2 border border-blue-300 bg-blue-300 grow"
+            className="px-4 py-2 border border-blue-300 bg-blue-300 w-full grow"
+            disabled={isLoadingViaApi}
           >
-            Add random book via api
+            {isLoadingViaApi ? (
+              <div className="flex items-center justify-center gap-3">
+                Loading
+                <FaSpinner className="animate-spin" />
+              </div>
+            ) : (
+              "Add random book via api"
+            )}
           </button>
         </div>
       </form>
